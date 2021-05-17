@@ -1,1 +1,132 @@
+import pyttsx3
+import speech_recognition as sr 
+import pyaudio
+import os
+import pyjokes
+import datetime
+import webbrowser
+import pywhatkit
 
+listner=sr.Recognizer()
+engine=pyttsx3.init('sapi5')
+voices=engine.getProperty('voices')
+engine.setProperty('voice',voices[0].id)
+
+def speak(audio):
+    engine.say(audio)
+    engine.runAndWait()
+
+
+def wishme():
+    hour=int(datetime.datetime.now().hour)
+    if hour>=0 and hour<12:
+        speak("Good morning sir !!!")
+        print("Good morning sir !!!")
+
+    elif hour>=12 and hour <18:
+        speak("Good afternoon sir !!!!")
+        print("Good afternoon sir!!!")
+        
+    elif hour>=18 and hour<20:
+        speak("Good evening sir!!!")
+        print("Good evening sir!!!")
+    
+    else:
+        speak("Good night sir!!!")
+        print("Good night sir!!!")
+
+    speak("i am jarvis. how may i help you !!!")    
+    print("i am jarvis how may i help you sir!!!")
+
+    
+
+def takecommand():
+
+    r=sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening . . .")
+        r.pause_threshold=1
+        audio=r.listen(source)
+
+
+    try:
+        print("Recognizing . . .")
+        query=r.recognize_google(audio,language='en-in')
+
+    except Exception as e:
+        print("say that again please. . . .")
+        return "None"
+    return query
+
+
+if __name__=="__main__":
+    wishme()
+    speak("Do you want to text the commands or speak")
+    print("Do you want to text the commands or speak")
+    choice_input=input()
+    print("U have choosen ",choice_input)
+    # text_query
+    if "speak" in choice_input:
+        speak("thank u for choosing the "+choice_input+" option")
+        print("thank u for choosing the "+choice_input+" option")
+        takecommand()
+        query=takecommand().lower()
+        if "open youtube" in query:
+            print(query)
+            speak('what should i search for sir ! ! !')
+            print(speak)
+            query=takecommand()
+            pywhatkit.playonyt(query)
+        elif "open jarvis text file" in query:
+            query=query.replace("open"," ")
+            print(query)
+            pathjarvis="source\\jarvis  .text. sourcecode.txt"
+            os.startfile("source\\jarvis  .text. sourcecode.txt")
+            speak("so u want to the path of the file"+query)
+            query=takecommand().lower()
+            if "yes" or "s" in query:
+                print("source\\jarvis  .text. sourcecode.txt")
+
+            else:
+                exit()
+        elif "open java" in query:
+            os.startfile("D:\\BlueJ.exe")
+        elif "stack overflow" or "stackoverflow" in query:
+            webbrowser.open("www.stackoverflow.com")
+            webbrowser.open_new_tab("https://stackoverflow.com/")
+
+    elif "text" in choice_input:
+        speak("thank u for choosing "+choice_input+" option !!!")
+        print("thank u for choosing "+choice_input+"option !!!")
+        text_query=input("Enter the command to be executed ")
+        text_query=text_query.lower()
+        if "open youtube" in text_query:
+            speak('what should i check for sir . . . ')
+            print('what should i check for sir . . . ')
+            youtube=input()
+            # webbrowser.open("youtube.com")
+            pywhatkit.playonyt(youtube)
+        elif "open source file" or "opensourcefile" in text_query:
+            text_query=text_query.replace( "open"," ")
+            sourcecode=("source\\jarvis  .text. sourcecode.txt")
+            # os.open(sourcecode)
+            os.startfile("source\\jarvis  .text. sourcecode.txt")
+            speak("do u want the path of the "+text_query)
+            print("do u want the path of the "+text_query)
+            scchoice=input().lower()
+            if "yes" or "yah" "s" in scchoice:
+                print(sourcecode)
+
+            elif "no " or "nah" in scchoice:
+                speak("No problem thank u for using this program be sure to send the feed back and u r opinion for improving the program ! ! !")
+        elif "open java" in text_query:
+            os.startfile("D:\\BlueJ.exe")
+        elif "stackoverflow" or "open stackoverflow" in text_query:
+            webbrowser.open('www.stackoverflow.com')
+            webbrowser.open_new_tab("https://stackoverflow.com/")
+
+
+
+    else:
+        speak("THe listed option or command is not included in this program .... it may be included in the further update ... please leave your feed back at \n vr8702394@gmail.com")
+        print("THe listed option or command is not included in this program .... it may be included in the further update ... please leave your feed back at \n vr8702394@gmail.com")
